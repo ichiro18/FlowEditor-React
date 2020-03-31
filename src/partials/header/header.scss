@@ -1,0 +1,9 @@
+@import "../../common/styles/config/variables";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 50px;
+  background-color: $primary-color;
+}

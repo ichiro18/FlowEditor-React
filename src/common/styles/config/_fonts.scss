@@ -1,0 +1,10 @@
+// ===========================================    Roboto    ===========================================
+$roboto-font-path: "~roboto-fontface/fonts/";
+@import "../../../../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface";
+
+// ===========================================    Fontawesome    ===========================================
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../../node_modules/@fortawesome/fontawesome-free/scss/brands";
