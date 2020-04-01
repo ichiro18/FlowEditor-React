@@ -1,72 +1,17 @@
-import React, { Component } from "react";
-import { FlowChartWithState } from "@mrblenny/react-flow-chart";
-import { Page } from "@project_src/partials/page";
-import { Content } from "@project_src/partials/content";
-import { Sidebar } from "@project_src/partials/sidebar";
-import { NodeTemplate } from "@project_src/components/flowchart/nodeTemplate";
+import React, {Component} from "react";
+import {FlowChartWithState} from "@mrblenny/react-flow-chart";
+import {Page} from "@project_src/partials/page";
+import {Content} from "@project_src/partials/content";
+import {Sidebar} from "@project_src/partials/sidebar";
+import {NodeTemplate} from "@project_src/components/flowchart/nodeTemplate";
 
 const chart = {
   offset: {
     x: 0,
     y: 0,
   },
-  nodes: {
-    node1: {
-      id: "node1",
-      type: "output-only",
-      position: {
-        x: 300,
-        y: 100,
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "output",
-          properties: {
-            value: "yes",
-          },
-        },
-        port2: {
-          id: "port2",
-          type: "output",
-          properties: {
-            value: "no",
-          },
-        },
-      },
-    },
-    node2: {
-      id: "node2",
-      type: "input-output",
-      position: {
-        x: 300,
-        y: 300,
-      },
-      ports: {
-        port1: {
-          id: "port1",
-          type: "input",
-        },
-        port2: {
-          id: "port2",
-          type: "output",
-        },
-      },
-    },
-  },
-  links: {
-    link1: {
-      id: "link1",
-      from: {
-        nodeId: "node1",
-        portId: "port2",
-      },
-      to: {
-        nodeId: "node2",
-        portId: "port1",
-      },
-    },
-  },
+  nodes: {},
+  links: {},
   selected: {},
   hovered: {},
 };
@@ -76,37 +21,27 @@ export class SketchPad extends Component {
     return (
       <Page>
         <Content>
-          <FlowChartWithState initialValue={chart} />
+          <FlowChartWithState initialValue={chart}/>
         </Content>
         <Sidebar>
           <NodeTemplate
-            type="top/bottom"
+            type="exit-only"
+            ports={{
+              port1: {
+                id: "port1",
+                type: "bottom",
+                properties: {
+                  custom: "property",
+                },
+              },
+            }}
+          />
+          <NodeTemplate
+            type="enter-only"
             ports={{
               port1: {
                 id: "port1",
                 type: "top",
-                properties: {
-                  custom: "property",
-                },
-              },
-              port2: {
-                id: "port1",
-                type: "bottom",
-                properties: {
-                  custom: "property",
-                },
-              },
-            }}
-            properties={{
-              custom: "property",
-            }}
-          />
-          <NodeTemplate
-            type="bottom-only"
-            ports={{
-              port1: {
-                id: "port1",
-                type: "bottom",
                 properties: {
                   custom: "property",
                 },
@@ -133,44 +68,74 @@ export class SketchPad extends Component {
             }}
           />
           <NodeTemplate
-            type="all-sides"
+            type="through"
             ports={{
               port1: {
                 id: "port1",
-                type: "left",
+                type: "top",
               },
               port2: {
                 id: "port2",
-                type: "right",
-              },
-              port3: {
-                id: "port3",
-                type: "top",
-              },
-              port4: {
-                id: "port4",
                 type: "bottom",
               },
             }}
           />
           <NodeTemplate
-            type="lots-of-ports"
+            type="condition"
             ports={{
               port1: {
                 id: "port1",
-                type: "left",
+                type: "top",
               },
               port2: {
                 id: "port2",
-                type: "right",
+                type: "left",
               },
               port3: {
                 id: "port3",
+                type: "right",
+              },
+            }}
+          />
+          <NodeTemplate
+            type="through-extras"
+            ports={{
+              port1: {
+                id: "port1",
                 type: "top",
+              },
+              port2: {
+                id: "port2",
+                type: "bottom",
+              },
+              port3: {
+                id: "port3",
+                type: "left",
               },
               port4: {
                 id: "port4",
+                type: "right",
+              },
+            }}
+          />
+          <NodeTemplate
+            type="through-extras-more"
+            ports={{
+              port1: {
+                id: "port1",
+                type: "top",
+              },
+              port2: {
+                id: "port2",
                 type: "bottom",
+              },
+              port3: {
+                id: "port3",
+                type: "left",
+              },
+              port4: {
+                id: "port4",
+                type: "left",
               },
               port5: {
                 id: "port5",
@@ -182,27 +147,36 @@ export class SketchPad extends Component {
               },
               port7: {
                 id: "port7",
-                type: "top",
+                type: "right",
               },
               port8: {
                 id: "port8",
-                type: "bottom",
-              },
-              port9: {
-                id: "port9",
-                type: "left",
-              },
-              port10: {
-                id: "port10",
                 type: "right",
               },
-              port11: {
-                id: "port11",
+            }}
+          />
+          <NodeTemplate
+            type="switch"
+            ports={{
+              port1: {
+                id: "port1",
                 type: "top",
               },
-              port12: {
-                id: "port12",
+              port2: {
+                id: "port2",
                 type: "bottom",
+              },
+              port3: {
+                id: "port3",
+                type: "right",
+              },
+              port4: {
+                id: "port4",
+                type: "right",
+              },
+              port5: {
+                id: "port5",
+                type: "right",
               },
             }}
           />
