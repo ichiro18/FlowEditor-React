@@ -1,0 +1,17 @@
+@import "../../../common/styles/config/variables";
+
+.port {
+  width: 24px;
+  height: 24px;
+  background: $primary-color;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.port__icon {
+  width: 24px;
+  height: 24px;
+  fill: $background-primary-color;
+}
