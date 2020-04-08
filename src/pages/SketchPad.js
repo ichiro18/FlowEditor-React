@@ -4,6 +4,7 @@ import {Page} from "@project_src/partials/page";
 import {Content} from "@project_src/partials/content";
 import {Sidebar} from "@project_src/partials/sidebar";
 import {NodeTemplate} from "@project_src/components/flowchart/nodeTemplate";
+import {Port} from "@project_src/components/flowchart/port";
 
 const chart = {
   offset: {
@@ -21,7 +22,50 @@ export class SketchPad extends Component {
     return (
       <Page>
         <Content>
-          <FlowChartWithState initialValue={chart}/>
+          <FlowChartWithState
+            initialValue={chart}
+            Components={{
+              Port
+            }}
+            config={{
+              validateLink: ({linkId, fromNodeId, fromPortId, toNodeId, toPortId, chart}) => {
+                let valid = true;
+                const from = chart.nodes[fromNodeId];
+                const to = chart.nodes[toNodeId];
+                const links = Object.values(chart.links);
+
+                // not self
+                if (!from || !to) return false;
+                if (fromNodeId === toNodeId) {
+                  console.warn('not self');
+                  return false;
+                }
+                // only in
+                if (from.ports[fromPortId].type === 'top') {
+                  console.warn('not from top');
+                  return false;
+                }
+                if (to.ports[toPortId].type !== 'top') {
+                  console.warn('only to top');
+                  return false;
+                }
+
+                for (const link of links) {
+                  // not multiple
+                  if (link.from.nodeId === fromNodeId && link.from.portId === fromPortId && link.id !== linkId) {
+                    console.warn('not multiple from port');
+                    return false;
+                  }
+                  if (link.to.nodeId === toNodeId && link.to.portId === toPortId && link.id !== linkId) {
+                    if (from.type !== 'exit-only') return false;
+                  }
+                }
+                // not loop without condition
+                return valid;
+              },
+              smartRouting: true,
+            }}
+          />
         </Content>
         <Sidebar>
           <NodeTemplate
@@ -30,9 +74,6 @@ export class SketchPad extends Component {
               port1: {
                 id: "port1",
                 type: "bottom",
-                properties: {
-                  custom: "property",
-                },
               },
             }}
           />
@@ -42,28 +83,6 @@ export class SketchPad extends Component {
               port1: {
                 id: "port1",
                 type: "top",
-                properties: {
-                  custom: "property",
-                },
-              },
-            }}
-          />
-          <NodeTemplate
-            type="left-right"
-            ports={{
-              port1: {
-                id: "port1",
-                type: "left",
-                properties: {
-                  custom: "property",
-                },
-              },
-              port2: {
-                id: "port2",
-                type: "right",
-                properties: {
-                  custom: "property",
-                },
               },
             }}
           />
