@@ -29,6 +29,28 @@ export const generateCurvePath = (startPos, endPos) => {
   },${end.y - curveY} ${end.x},${end.y}`;
 };
 
+export const generateRightAnglePath = (startPos, endPos) => {
+  const width = Math.abs(startPos.x - endPos.x);
+  const height = Math.abs(startPos.y - endPos.y);
+  const leftToRight = startPos.x < endPos.x;
+  const topToBottom = startPos.y < endPos.y;
+  const isHorizontal = width > height;
+
+  let start;
+  let end;
+  if (isHorizontal) {
+    start = leftToRight ? startPos : endPos;
+    end = leftToRight ? endPos : startPos;
+  } else {
+    start = topToBottom ? startPos : endPos;
+    end = topToBottom ? endPos : startPos;
+  }
+
+  const vertex = isHorizontal ? `${start.x},${end.y}` : `${end.x},${start.y}`;
+
+  return `M${start.x},${start.y} L ${vertex} ${end.x},${end.y}`;
+};
+
 const finder = new PF.JumpPointFinder({
   heuristic: PF.Heuristic.manhattan,
 });
@@ -77,7 +99,7 @@ const toSvgPath = (points, grid) => {
   rest.forEach(([x, y]) => {
     d += ` L${x} ${y}`;
   });
-  return d
+  return d;
 };
 
 const toPrettySvgPath = (points, grid) => {
@@ -85,9 +107,9 @@ const toPrettySvgPath = (points, grid) => {
   scope.setup([grid.width * 5, grid.height * 5]);
   let path = new scope.Path({
     segments: points,
-    strokeColor: 'black',
+    strokeColor: "black",
     closed: false,
-    fullySelected: true
+    fullySelected: true,
   });
 
   path.smooth();
@@ -100,7 +122,7 @@ const toPrettySvgPath = (points, grid) => {
   scope.clear();
   scope = null;
 
-  return svg.getAttribute('d');
+  return svg.getAttribute("d");
 };
 
 export const generateSmartPath = (
@@ -108,7 +130,8 @@ export const generateSmartPath = (
   startPos,
   endPos,
   fromPort,
-  toPort
+  toPort,
+  config
 ) => {
   const grid = new PF.Grid(matrix);
 
@@ -122,41 +145,43 @@ export const generateSmartPath = (
   };
 
   try {
+    setWalkableAtPorts(
+      { pos: startPosScaled, port: fromPort },
+      { pos: endPosScaled, port: toPort },
+      grid
+    );
 
-  setWalkableAtPorts(
-    { pos: startPosScaled, port: fromPort },
-    { pos: endPosScaled, port: toPort },
-    grid
-  );
+    const path = finder.findPath(
+      startPosScaled.x,
+      startPosScaled.y,
+      endPosScaled.x,
+      endPosScaled.y,
+      grid
+    );
 
-  const path = finder.findPath(
-    startPosScaled.x,
-    startPosScaled.y,
-    endPosScaled.x,
-    endPosScaled.y,
-    grid
-  );
+    if (!path.length) {
+      console.log("ERROR: path empty");
+      // console.log(startPosScaled, endPosScaled);
+    }
 
-  if (!path.length) {
-    console.log("ERROR: path empty");
-    // console.log(startPosScaled, endPosScaled);
-  }
+    let resultPath = path;
+    resultPath = PF.Util.compressPath(path);
+    resultPath = PF.Util.smoothenPath(grid, resultPath);
 
-  let resultPath = path;
-  resultPath = PF.Util.compressPath(path);
-  resultPath = PF.Util.smoothenPath(grid, resultPath);
+    const points = resultPath.map((item) => {
+      const [x, y] = item;
+      return [x * 5, y * 5];
+    });
 
-  const points = resultPath.map((item) => {
-    const [x, y] = item;
-    return [x * 5, y * 5];
-  });
-
-  if (points.length) {
-    return toPrettySvgPath(points, grid);
-    // return toSvgPath(points, grid);
-  } else {
-    return generateCurvePath(startPos, endPos);
-  }
+    if (!config.taxiPath) {
+      if (config.normalizedPath) {
+        return toPrettySvgPath(points, grid);
+      } else {
+        return toSvgPath(points, grid);
+      }
+    } else {
+      return generateRightAnglePath(startPos, endPos);
+    }
   } catch (e) {
     console.log("ERROR: why? draw default");
     return generateCurvePath(startPos, endPos);

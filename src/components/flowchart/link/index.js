@@ -16,7 +16,7 @@ export const Link = ({
   isSelected,
   matrix,
 }) => {
-  const points = toPort && matrix ? generateSmartPath(matrix, startPos, endPos, fromPort, toPort) : generateCurvePath(startPos, endPos);
+  const points = config.smartRouting && toPort && matrix ? generateSmartPath(matrix, startPos, endPos, fromPort, toPort, config) : generateCurvePath(startPos, endPos);
 
   const linkStyle = {
     stroke: "",
@@ -35,10 +35,13 @@ export const Link = ({
       {/* Thick line to make selection easier */}
       <path
         d={points}
-        className={style.link__pathSelected}
-        strokeOpacity={isHovered || isSelected ? 0.1 : 0}
-        onMouseEnter={() => onLinkMouseEnter({ config, linkId: link.id })}
-        onMouseLeave={() => onLinkMouseLeave({ config, linkId: link.id })}
+        stroke="#1976d2"
+        strokeWidth="20"
+        fill="none"
+        strokeLinecap="round"
+        strokeOpacity={(isHovered || isSelected) ? 0.1 : 0}
+        onMouseEnter={() => { onLinkMouseEnter({ config, linkId: link.id })}}
+        onMouseLeave={() => { onLinkMouseLeave({ config, linkId: link.id })}}
         onClick={(e) => {
           onLinkClick({ config, linkId: link.id });
           e.stopPropagation();
