@@ -11,6 +11,18 @@ exports.config = {
           loader: 'babel-loader',
         }
       },
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "ts-loader"
+        }
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader"
+      }
     ],
   },
 };

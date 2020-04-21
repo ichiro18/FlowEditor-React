@@ -23,16 +23,19 @@ const baseConfig = {
   mode: 'development',
   devtool: 'source-map',
   entry: {
-    index: path.join(constants.PATH.source, 'index.js'),
+    index: path.join(constants.PATH.source, 'index.tsx'),
   },
   output: {
     path: constants.PATH.dist,
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', ".ts", ".tsx"],
     alias: {
-      '@project_src': constants.PATH.source,
+      '@src': constants.PATH.source,
+      '@assets': path.join(constants.PATH.source, 'assets'),
+      '@components': path.join(constants.PATH.source, 'components'),
+      '@containers': path.join(constants.PATH.source, 'containers'),
     },
   },
 };
