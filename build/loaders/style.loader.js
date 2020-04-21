@@ -10,7 +10,6 @@ exports.config = {
           process.env.NODE_ENV !== 'production'
             ? 'style-loader'
             : MiniCssExtractPlugin.loader,
-          "@teamsupercell/typings-for-css-modules-loader",
           {
             loader: 'css-loader',
             options: {
@@ -26,7 +25,6 @@ exports.config = {
           process.env.NODE_ENV !== 'production'
             ? 'style-loader'
             : MiniCssExtractPlugin.loader,
-          "@teamsupercell/typings-for-css-modules-loader",
           {
             loader: 'css-loader',
             options: {

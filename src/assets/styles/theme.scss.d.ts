@@ -1483,8 +1483,7 @@ declare namespace ThemeScssModule {
 }
 
 declare const ThemeScssModule: ThemeScssModule.IThemeScss & {
-  /** WARNING: Only available when `css-loader` is used without `style-loader` or `mini-css-extract-plugin` */
   locals: ThemeScssModule.IThemeScss;
 };
 
-export = ThemeScssModule;
+export default ThemeScssModule;

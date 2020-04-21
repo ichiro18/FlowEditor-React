@@ -12,6 +12,6 @@ export class Sidebar extends React.Component<any, any> {
     | boolean
     | null
     | undefined {
-    return <aside>{this.props.children}</aside>;
+    return <aside className={s.sidebar}>{this.props.children}</aside>;
   }
 }
