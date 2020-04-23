@@ -15,3 +15,5 @@ export class Sidebar extends React.Component<any, any> {
     return <aside className={s.sidebar}>{this.props.children}</aside>;
   }
 }
+
+export default Sidebar;

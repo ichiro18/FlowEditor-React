@@ -1,6 +1,15 @@
+// * Global
 import * as React from "react";
-import Page from "./containers/Page";
+import { Provider } from "react-redux";
+
+// * Extension
+import store from "./store";
+
+// * Custom
 import theme from "./assets/styles/theme.scss";
+
+// * Components
+import Page from "./containers/Page";
 import { Header } from "./components/partials/header/header";
 
 export class App extends React.Component<any, any> {
@@ -15,10 +24,12 @@ export class App extends React.Component<any, any> {
     | null
     | undefined {
     return (
-      <Page>
-        <Header />
-        <main className={theme.content}>Content</main>
-      </Page>
+      <Provider store={store}>
+        <Page>
+          <Header />
+          <main className={theme.content}>Content</main>
+        </Page>
+      </Provider>
     );
   }
 }
