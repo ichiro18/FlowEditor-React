@@ -12,6 +12,7 @@ import theme from "./assets/styles/theme.scss";
 import Page from "./containers/Page";
 import { Header } from "./components/partials/header/header";
 import {Flowchart} from "./features/flowchart/components/Flowchart";
+import Templater from "./features/flowchart/components/Templater";
 
 export class App extends React.Component<any, any> {
   render():
@@ -30,6 +31,7 @@ export class App extends React.Component<any, any> {
           <Header />
           <main className={theme.content}>
             <Flowchart/>
+            <Templater />
           </main>
         </Page>
       </Provider>

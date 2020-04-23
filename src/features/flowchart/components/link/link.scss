@@ -1,0 +1,32 @@
+@import "../../../../assets/styles/config/variables";
+
+.link {
+  position: absolute;
+  cursor: pointer;
+  left: 0;
+  right: 0;
+  overflow: visible;
+  fill: none;
+}
+
+.link__connector {
+  fill: $primary-color;
+}
+
+.link__path {
+  stroke: $primary-color;
+  stroke-width: 3;
+  fill: none;
+  stroke-linejoin: arcs;
+}
+
+.link__path--selected {
+  stroke: $primary-color;
+  stroke-width: 20;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.link__marker {
+  fill: $primary-color;
+}

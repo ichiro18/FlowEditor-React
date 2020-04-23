@@ -1,0 +1,9 @@
+@import "../../../../assets/styles/config/variables";
+
+.node {
+  position: absolute;
+  transition: 0.3s ease box-shadow, 0.3s ease margin-top;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 4px;
+  min-width: 200px;
+}
