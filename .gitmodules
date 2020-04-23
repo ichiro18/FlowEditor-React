@@ -1,0 +1,3 @@
+[submodule "flowchart"]
+	path = lib/flowchart
+	url = git@github.com:ichiro18/FlowEditor-React.git

@@ -19,7 +19,10 @@
       "@components/*": ["src/components/*"],
       "@containers/*": ["src/containers/*"]
     },
-    "sourceMap": true
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

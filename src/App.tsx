@@ -11,6 +11,7 @@ import theme from "./assets/styles/theme.scss";
 // * Components
 import Page from "./containers/Page";
 import { Header } from "./components/partials/header/header";
+import {Flowchart} from "./features/flowchart/components/Flowchart";
 
 export class App extends React.Component<any, any> {
   render():
@@ -27,7 +28,9 @@ export class App extends React.Component<any, any> {
       <Provider store={store}>
         <Page>
           <Header />
-          <main className={theme.content}>Content</main>
+          <main className={theme.content}>
+            <Flowchart/>
+          </main>
         </Page>
       </Provider>
     );
